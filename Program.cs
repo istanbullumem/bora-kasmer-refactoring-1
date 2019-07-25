@@ -34,30 +34,7 @@ namespace Refactoring
             foreach (Register reg in invoice.registers)
             {
                 Course lesson = courses[reg.courseID];
-                var thisAmount = 0;
-
-                switch (lesson.Type)
-                {
-                    case Types.Art:
-                        {
-                            thisAmount = 3000;
-                            if (reg.student > 15)
-                            {
-                                thisAmount += 1000 * (reg.student - 10);
-                            }
-                            break;
-                        }
-                    case Types.Software:
-                        {
-                            thisAmount = 30000;
-                            if (reg.student > 10)
-                            {
-                                thisAmount += 10000 + 500 * (reg.student - 5);
-                            }
-                            thisAmount += 300 * reg.student;
-                            break;
-                        }
-                }
+                int thisAmount = GetAmount(reg, lesson);
                 //kazanılan para puan
                 volumeCredits += Math.Max(reg.student - 15, 0);
 
@@ -73,6 +50,36 @@ namespace Refactoring
             result += $"Kazancınız { volumeCredits.ToString("C", trFormat) } \n";
             Console.WriteLine(result);
             Console.ReadLine();
+        }
+
+        private static int GetAmount(Register reg, Course lesson)
+        {
+            var thisAmount = 0;
+
+            switch (lesson.Type)
+            {
+                case Types.Art:
+                    {
+                        thisAmount = 3000;
+                        if (reg.student > 15)
+                        {
+                            thisAmount += 1000 * (reg.student - 10);
+                        }
+                        break;
+                    }
+                case Types.Software:
+                    {
+                        thisAmount = 30000;
+                        if (reg.student > 10)
+                        {
+                            thisAmount += 10000 + 500 * (reg.student - 5);
+                        }
+                        thisAmount += 300 * reg.student;
+                        break;
+                    }
+            }
+
+            return thisAmount;
         }
     }
 }
