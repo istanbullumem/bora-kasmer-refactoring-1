@@ -52,34 +52,34 @@ namespace Refactoring
             Console.ReadLine();
         }
 
-        private static int GetAmount(Register reg, Course lesson)
+        private static int GetAmount(Register register, Course lesson)
         {
-            var thisAmount = 0;
+            var result = 0;
 
             switch (lesson.Type)
             {
                 case Types.Art:
                     {
-                        thisAmount = 3000;
-                        if (reg.student > 15)
+                        result = 3000;
+                        if (register.student > 15)
                         {
-                            thisAmount += 1000 * (reg.student - 10);
+                            result += 1000 * (register.student - 10);
                         }
                         break;
                     }
                 case Types.Software:
                     {
-                        thisAmount = 30000;
-                        if (reg.student > 10)
+                        result = 30000;
+                        if (register.student > 10)
                         {
-                            thisAmount += 10000 + 500 * (reg.student - 5);
+                            result += 10000 + 500 * (register.student - 5);
                         }
-                        thisAmount += 300 * reg.student;
+                        result += 300 * register.student;
                         break;
                     }
             }
 
-            return thisAmount;
+            return result;
         }
     }
 }
