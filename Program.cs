@@ -26,7 +26,6 @@ namespace Refactoring
             };
 
             decimal totalAmount = 0;
-            decimal volumeCredits = 0;
             var result = $"{invoice.customerName} için Fatura Detayı: \n";
 
             foreach (Register reg in invoice.registers)
@@ -36,6 +35,7 @@ namespace Refactoring
                 totalAmount += GetAmount(reg);
             }
 
+            decimal volumeCredits = 0;
             foreach (Register reg in invoice.registers)
             {
                 volumeCredits += CalculateVolumeCredit(reg);
