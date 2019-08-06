@@ -12,7 +12,7 @@ namespace Refactoring
         static void Main(string[] args)
         {
             Console.WriteLine("Wellcome to Refactoring Example");
-          
+
             courses.Add("dpattern", new Course() { Name = "Design Pattern", Type = Types.Software });
             courses.Add("hface", new Course() { Name = "Human Face", Type = Types.Art });
             courses.Add("redis", new Course() { Name = "Redis", Type = Types.Software });
@@ -36,12 +36,7 @@ namespace Refactoring
             foreach (Register reg in invoice.registers)
             {
                 int thisAmount = GetAmount(reg);
-                //kazanılan para puan
-                volumeCredits += Math.Max(reg.student - 15, 0);
-
-                // extra bonus para puan her 5 yazılım öğrencisi için
-                decimal fiveStudentGroup = reg.student / 5;
-                if (Types.Software == FindCourse(reg).Type) volumeCredits += Math.Floor(fiveStudentGroup);
+                volumeCredits += CalculateVolumeCredit(reg);
 
                 // her bir şiparişin fiyatı
                 result += $"{FindCourse(reg).Name}: {(thisAmount / 100).ToString("C", trFormat)} ({reg.student} kişi)\n";
@@ -86,6 +81,18 @@ namespace Refactoring
         public static Course FindCourse(Register register)
         {
             return courses[register.courseID];
+        }
+
+        public static decimal CalculateVolumeCredit(Register register)
+        {
+            decimal volumeCredits = 0;
+            //kazanılan para puan
+            volumeCredits += Math.Max(register.student - 15, 0);
+
+            // extra bonus para puan her 5 yazılım öğrencisi için
+            decimal fiveStudentGroup = register.student / 5;
+            if (Types.Software == FindCourse(register).Type) volumeCredits += Math.Floor(fiveStudentGroup);
+            return volumeCredits;
         }
     }
 }
