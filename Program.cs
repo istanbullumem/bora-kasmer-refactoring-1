@@ -96,23 +96,23 @@ namespace Refactoring
 
         private static decimal TotalVolumeCredits()
         {
-            decimal volumeCredits = 0;
+            decimal result = 0;
             foreach (Register reg in invoice.registers)
             {
-                volumeCredits += CalculateVolumeCredit(reg);
+                result += CalculateVolumeCredit(reg);
             }
 
-            return volumeCredits;
+            return result;
         }
 
         private static decimal GetTotalAmount()
         {
-            decimal totalAmount = 0;
+            decimal result = 0;
             foreach (Register reg in invoice.registers)
             {
-                totalAmount += GetAmount(reg);
+                result += GetAmount(reg);
             }
-            return totalAmount;
+            return result;
         }
     }
 }
