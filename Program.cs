@@ -35,11 +35,11 @@ namespace Refactoring
                 volumeCredits += CalculateVolumeCredit(reg);
 
                 // her bir şiparişin fiyatı
-                result += $"{FindCourse(reg).Name}: {Format(thisAmount / 100)} ({reg.student} kişi)\n";
+                result += $"{FindCourse(reg).Name}: {Tr(thisAmount / 100)} ({reg.student} kişi)\n";
                 totalAmount += thisAmount;
             }
-            result += $"Toplam borç { Format(totalAmount / 100)}\n";
-            result += $"Kazancınız { Format(volumeCredits) } \n";
+            result += $"Toplam borç { Tr(totalAmount / 100)}\n";
+            result += $"Kazancınız { Tr(volumeCredits) } \n";
             Console.WriteLine(result);
             Console.ReadLine();
         }
@@ -91,7 +91,7 @@ namespace Refactoring
             return volumeCredits;
         }
 
-        public static string Format(decimal value)
+        public static string Tr(decimal value)
         {
             CultureInfo trFormat = new CultureInfo("tr-TR", false);
             trFormat.NumberFormat.CurrencySymbol = "TL";
