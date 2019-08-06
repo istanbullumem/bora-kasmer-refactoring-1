@@ -35,7 +35,7 @@ namespace Refactoring
 
             foreach (Register reg in invoice.registers)
             {
-                int thisAmount = GetAmount(reg, FindCourse(reg));
+                int thisAmount = GetAmount(reg);
                 //kazanılan para puan
                 volumeCredits += Math.Max(reg.student - 15, 0);
 
@@ -53,11 +53,11 @@ namespace Refactoring
             Console.ReadLine();
         }
 
-        private static int GetAmount(Register register, Course lesson)
+        private static int GetAmount(Register register)
         {
             var result = 0;
 
-            switch (lesson.Type)
+            switch (FindCourse(register).Type)
             {
                 case Types.Art:
                     {
