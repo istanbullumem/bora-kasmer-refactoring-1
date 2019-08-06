@@ -35,17 +35,16 @@ namespace Refactoring
 
             foreach (Register reg in invoice.registers)
             {
-                Course lesson = FindCourse(reg);
-                int thisAmount = GetAmount(reg, lesson);
+                int thisAmount = GetAmount(reg, FindCourse(reg));
                 //kazanılan para puan
                 volumeCredits += Math.Max(reg.student - 15, 0);
 
                 // extra bonus para puan her 5 yazılım öğrencisi için
                 decimal fiveStudentGroup = reg.student / 5;
-                if (Types.Software == lesson.Type) volumeCredits += Math.Floor(fiveStudentGroup);
+                if (Types.Software == FindCourse(reg).Type) volumeCredits += Math.Floor(fiveStudentGroup);
 
                 // her bir şiparişin fiyatı
-                result += $"{lesson.Name}: {(thisAmount / 100).ToString("C", trFormat)} ({reg.student} kişi)\n";
+                result += $"{FindCourse(reg).Name}: {(thisAmount / 100).ToString("C", trFormat)} ({reg.student} kişi)\n";
                 totalAmount += thisAmount;
             }
             result += $"Toplam borç { (totalAmount / 100).ToString("C", trFormat)}\n";
