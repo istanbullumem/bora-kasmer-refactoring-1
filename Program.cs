@@ -25,17 +25,15 @@ namespace Refactoring
                 new Register() { courseID = "redis", student = 5 },
             };
 
-            decimal totalAmount = 0;
             var result = $"{invoice.customerName} için Fatura Detayı: \n";
 
             foreach (Register reg in invoice.registers)
             {
                 // her bir şiparişin fiyatı
                 result += $"{FindCourse(reg).Name}: {Tr(GetAmount(reg) / 100)} ({reg.student} kişi)\n";
-                totalAmount += GetAmount(reg);
             }
 
-            result += $"Toplam borç { Tr(totalAmount / 100)}\n";
+            result += $"Toplam borç { Tr(GetTotalAmount() / 100)}\n";
             result += $"Kazancınız { Tr(TotalVolumeCredits()) } \n";
             Console.WriteLine(result);
             Console.ReadLine();
@@ -105,6 +103,16 @@ namespace Refactoring
             }
 
             return volumeCredits;
+        }
+
+        private static decimal GetTotalAmount()
+        {
+            decimal totalAmount = 0;
+            foreach (Register reg in invoice.registers)
+            {
+                totalAmount += GetAmount(reg);
+            }
+            return totalAmount;
         }
     }
 }
