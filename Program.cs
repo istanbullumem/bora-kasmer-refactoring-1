@@ -7,10 +7,12 @@ namespace Refactoring
 {
     class Program
     {
+        static IDictionary<string, Course> courses = new Dictionary<string, Course>();
+
         static void Main(string[] args)
         {
             Console.WriteLine("Wellcome to Refactoring Example");
-            IDictionary<string, Course> courses = new Dictionary<string, Course>();
+          
             courses.Add("dpattern", new Course() { Name = "Design Pattern", Type = Types.Software });
             courses.Add("hface", new Course() { Name = "Human Face", Type = Types.Art });
             courses.Add("redis", new Course() { Name = "Redis", Type = Types.Software });
@@ -33,7 +35,7 @@ namespace Refactoring
 
             foreach (Register reg in invoice.registers)
             {
-                Course lesson = courses[reg.courseID];
+                Course lesson = FindCourse(reg);
                 int thisAmount = GetAmount(reg, lesson);
                 //kazanılan para puan
                 volumeCredits += Math.Max(reg.student - 15, 0);
@@ -80,6 +82,11 @@ namespace Refactoring
             }
 
             return result;
+        }
+
+        public static Course FindCourse(Register register)
+        {
+            return courses[register.courseID];
         }
     }
 }
