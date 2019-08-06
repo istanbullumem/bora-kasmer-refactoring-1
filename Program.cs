@@ -8,6 +8,7 @@ namespace Refactoring
     class Program
     {
         static IDictionary<string, Course> courses = new Dictionary<string, Course>();
+        static Invoice invoice = new Invoice();
 
         static void Main(string[] args)
         {
@@ -17,7 +18,6 @@ namespace Refactoring
             courses.Add("hface", new Course() { Name = "Human Face", Type = Types.Art });
             courses.Add("redis", new Course() { Name = "Redis", Type = Types.Software });
 
-            Invoice invoice = new Invoice();
             invoice.customerName = "Hasel Team";
             invoice.registers = new Register[]{
                 new Register(){courseID="dpattern",student=20},
@@ -35,11 +35,7 @@ namespace Refactoring
                 totalAmount += GetAmount(reg);
             }
 
-            decimal volumeCredits = 0;
-            foreach (Register reg in invoice.registers)
-            {
-                volumeCredits += CalculateVolumeCredit(reg);
-            }
+            decimal volumeCredits = TotalVolumeCredits();
 
             result += $"Toplam borç { Tr(totalAmount / 100)}\n";
             result += $"Kazancınız { Tr(volumeCredits) } \n";
@@ -100,6 +96,17 @@ namespace Refactoring
             trFormat.NumberFormat.CurrencySymbol = "TL";
             trFormat.NumberFormat.NumberDecimalDigits = 2;
             return value.ToString("C", trFormat);
+        }
+
+        private static decimal TotalVolumeCredits()
+        {
+            decimal volumeCredits = 0;
+            foreach (Register reg in invoice.registers)
+            {
+                volumeCredits += CalculateVolumeCredit(reg);
+            }
+
+            return volumeCredits;
         }
     }
 }
