@@ -35,10 +35,8 @@ namespace Refactoring
                 totalAmount += GetAmount(reg);
             }
 
-            decimal volumeCredits = TotalVolumeCredits();
-
             result += $"Toplam borç { Tr(totalAmount / 100)}\n";
-            result += $"Kazancınız { Tr(volumeCredits) } \n";
+            result += $"Kazancınız { Tr(TotalVolumeCredits()) } \n";
             Console.WriteLine(result);
             Console.ReadLine();
         }
