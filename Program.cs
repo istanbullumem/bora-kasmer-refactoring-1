@@ -31,12 +31,11 @@ namespace Refactoring
 
             foreach (Register reg in invoice.registers)
             {
-                int thisAmount = GetAmount(reg);
                 volumeCredits += CalculateVolumeCredit(reg);
 
                 // her bir şiparişin fiyatı
-                result += $"{FindCourse(reg).Name}: {Tr(thisAmount / 100)} ({reg.student} kişi)\n";
-                totalAmount += thisAmount;
+                result += $"{FindCourse(reg).Name}: {Tr(GetAmount(reg) / 100)} ({reg.student} kişi)\n";
+                totalAmount += GetAmount(reg);
             }
             result += $"Toplam borç { Tr(totalAmount / 100)}\n";
             result += $"Kazancınız { Tr(volumeCredits) } \n";
