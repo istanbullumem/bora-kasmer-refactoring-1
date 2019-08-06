@@ -29,21 +29,17 @@ namespace Refactoring
             decimal volumeCredits = 0;
             var result = $"{invoice.customerName} için Fatura Detayı: \n";
 
-            CultureInfo trFormat = new CultureInfo("tr-TR", false);
-            trFormat.NumberFormat.CurrencySymbol = "TL";
-            trFormat.NumberFormat.NumberDecimalDigits = 2;
-
             foreach (Register reg in invoice.registers)
             {
                 int thisAmount = GetAmount(reg);
                 volumeCredits += CalculateVolumeCredit(reg);
 
                 // her bir şiparişin fiyatı
-                result += $"{FindCourse(reg).Name}: {(thisAmount / 100).ToString("C", trFormat)} ({reg.student} kişi)\n";
+                result += $"{FindCourse(reg).Name}: {Format(thisAmount / 100)} ({reg.student} kişi)\n";
                 totalAmount += thisAmount;
             }
-            result += $"Toplam borç { (totalAmount / 100).ToString("C", trFormat)}\n";
-            result += $"Kazancınız { volumeCredits.ToString("C", trFormat) } \n";
+            result += $"Toplam borç { Format(totalAmount / 100)}\n";
+            result += $"Kazancınız { Format(volumeCredits) } \n";
             Console.WriteLine(result);
             Console.ReadLine();
         }
@@ -93,6 +89,14 @@ namespace Refactoring
             decimal fiveStudentGroup = register.student / 5;
             if (Types.Software == FindCourse(register).Type) volumeCredits += Math.Floor(fiveStudentGroup);
             return volumeCredits;
+        }
+
+        public static string Format(decimal value)
+        {
+            CultureInfo trFormat = new CultureInfo("tr-TR", false);
+            trFormat.NumberFormat.CurrencySymbol = "TL";
+            trFormat.NumberFormat.NumberDecimalDigits = 2;
+            return value.ToString("C", trFormat);
         }
     }
 }
