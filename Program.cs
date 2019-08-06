@@ -31,12 +31,16 @@ namespace Refactoring
 
             foreach (Register reg in invoice.registers)
             {
-                volumeCredits += CalculateVolumeCredit(reg);
-
                 // her bir şiparişin fiyatı
                 result += $"{FindCourse(reg).Name}: {Tr(GetAmount(reg) / 100)} ({reg.student} kişi)\n";
                 totalAmount += GetAmount(reg);
             }
+
+            foreach (Register reg in invoice.registers)
+            {
+                volumeCredits += CalculateVolumeCredit(reg);
+            }
+
             result += $"Toplam borç { Tr(totalAmount / 100)}\n";
             result += $"Kazancınız { Tr(volumeCredits) } \n";
             Console.WriteLine(result);
